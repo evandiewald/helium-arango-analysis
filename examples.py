@@ -3,10 +3,10 @@ from helium_arango_analysis.adapters import create_networkx_graph, convert_nx_to
 from helium_arango_analysis.plotting import plot_witness_graph_plotly, plot_payee_graph, plot_payer_graph, plot_graph_simple
 
 
-# initialize the HTTP client by providing the URL to the server
+## initialize the HTTP client by providing the URL to the server
 client = Client('http://localhost:8000')
 
-# get recent witness receipts (useful for checking, e.g. rssi vs. distance for a datarate
+## get recent witness receipts (useful for checking, e.g. rssi vs. distance for a datarate
 receipts = client.get_sample_of_recent_witness_receipts(limit=1000)
 print(receipts['receipts'][0])
 # {'_key': '6b3c3dffe6f61cc812df48bccf3c9b02',
@@ -26,8 +26,7 @@ print(receipts['receipts'][0])
 #  'timestamp': 1582395607524872246,
 #  'packet_hash': 'MV2gwnYnrl_Gu8oPeia-UzZGq-hBWPVM0l_uE88b-vU'}
 
-
-# get hotspot witness graph in hex
+## get hotspot witness graph in hex
 import h3
 hex = h3.h3_to_parent('882a847063fffff', 5)
 nodes, edges = client.get_witness_graph_in_hex(hex=hex).values()
