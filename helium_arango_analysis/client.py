@@ -215,5 +215,20 @@ class HeliumArangoHTTPClient(object):
         url = self.base_url + f'/hotspots/{address}/inbound'
         return self.get_request(url)
 
+    def get_sample_of_recent_witness_receipts(self, address: Optional[str] = None, limit: Optional[int] = None):
+        """
+        Get sample of recent witness receipts. If no address is specified, will return receipts from the network overall.
+
+        :param address: (optional) A hotspot address to focus on.
+        :param limit: (optional) The maximum number of receipts to return.
+        :return: The list of receipts.
+        """
+        params = {
+            'address': address,
+            'limit': limit
+        }
+        url = self.base_url + f'/hotspots/receipts'
+        return self.get_request(url, params=params)
+
 
 
