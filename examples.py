@@ -33,18 +33,29 @@ nodes, edges = client.get_witness_graph_in_hex(hex=hex).values()
 
 # nodes are hotspots
 print(nodes[0])
-# {'address': '13A7h7obhgFgey8rpZJm6PCnp2EumsG6YX1fKDhGhSmkeKLudgj',
-#   'dc_balance': 0,
-#   'dc_nonce': 0,
-#   'security_balance': 0,
-#   'balance': 14868400000000,
-#   'nonce': 18,
-#   'first_block': 133374,
-#   'last_block': 216368,
-#   'staked_balance': 0,
-#   '_id': 'accounts/13A7h7obhgFgey8rpZJm6PCnp2EumsG6YX1fKDhGhSmkeKLudgj',
-#   '_key': '13A7h7obhgFgey8rpZJm6PCnp2EumsG6YX1fKDhGhSmkeKLudgj',
-#   '_rev': '_dO9xW02--S'}
+# {'_key': '112nUEtrKPrgWtczpbira7aDU5271qduDfJm8Y2WSXjWwpkAHdgJ',
+#  '_id': 'hotspots/112nUEtrKPrgWtczpbira7aDU5271qduDfJm8Y2WSXjWwpkAHdgJ',
+#  '_rev': '_dO9xXdG--T',
+#  'address': '112nUEtrKPrgWtczpbira7aDU5271qduDfJm8Y2WSXjWwpkAHdgJ',
+#  'owner': '14FUSqWYcWfQd7KQjrDSPXehsxvtJqxFf2q2QdxakbH4597KCz9',
+#  'location': '8c2a847004b05ff',
+#  'last_poc_challenge': 217323,
+#  'last_poc_onion_key_hash': 'ZHXuud7wao-NWT7_66JHx9G5vyHxQgLjlST8Y7uteqQ',
+#  'witnesses': {},
+#  'first_block': 134960,
+#  'last_block': 217359,
+#  'nonce': 3,
+#  'name': 'big-maroon-ant',
+#  'first_timestamp': '2019-12-13 22:42:18+00:00',
+#  'reward_scale': None,
+#  'elevation': 0,
+#  'gain': 12,
+#  'location_hex': '882a847005fffff',
+#  'mode': 'GatewayMode.full',
+#  'payer': '14fzfjFcHpDR1rTH8BNPvSi5dKBbgxaDnmsVPbCjuq9ENjpZbxh',
+#  'status': 'online',
+#  'geo_location': {'coordinates': [-79.93777048403096, 40.411233460016334],
+#   'type': 'Point'}}
 
 # edges are witness receipts with distances
 print(edges[0])
