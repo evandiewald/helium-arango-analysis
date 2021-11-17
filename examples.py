@@ -81,6 +81,13 @@ print(f'Num nodes: {tg_witness_graph.num_nodes}\n'
 # Num node features: 2
 # Num edge features: 42
 
+# create spektral Graph (tensorflow-based) with specified features/outputs
+from helium_arango_analysis.spektral_utils import make_spektral_graph
+tf_witness_graph = make_spektral_graph(nodes, edges,
+                                       node_features=['elevation', 'gain'],
+                                       edge_features=['rssi', 'snr', 'distance_m'],
+                                       output='rewards_5d')
+
 # some plotting (work in progress)
 plot_witness_graph_plotly(witness_graph) # opens interactive plotly graph in your browser
 

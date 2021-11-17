@@ -1,6 +1,5 @@
 from typing import List
 import networkx as nx
-# from torch_geometric.data import Data
 
 
 def create_networkx_graph(nodes: List[dict], edges: List[dict], name: str = None) -> nx.DiGraph:
@@ -46,4 +45,10 @@ def convert_nx_to_torch_geometric(g: nx.DiGraph, group_node_attrs: List[str], gr
     data = from_networkx(g, group_node_attrs, group_edge_attrs)
 
     return data
+
+
+
+
+
+
 

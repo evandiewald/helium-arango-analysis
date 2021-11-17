@@ -10,11 +10,13 @@ Helium's Blockchain API is an effective way to view historical data stored on-ch
 To run use these tools, you will need a running instance of [`helium-arango-http`](https://github.com/evandiewald/helium-arango-http), a REST API that serves queries of an ArangoDB database.
 
 ## Quick setup
+**Note:** Because it is meant as a demonstration of a variety of different network analysis/deep learning tools, this repository is not optimized in terms of dependencies. The most stark example of this is that both TensorFlow (for Spektral) and Torch (torch-geometric) are present in [`requirements.txt`](requirements.txt) because we supply adapters for both. My recommendation is that you fork this repo and only keep the dependencies/functions that you need. If you are not planning to do any deep learning, there's no need to download the full TF/Torch wheels!
+
 Clone the repository and initialize a virtual environment with [`requirements.txt`](requirements.txt), e.g. 
 
 ```pip install -r requirements.txt```
 
-**Note:** By default, the CPU-only version of [PyTorch 1.10](https://pytorch.org/docs/stable/index.html) is installed. If you want to use a CUDA-compatible GPU to train graph neural networks, make sure to adjust accordingly.
+**Another Note:** By default, the CPU-only version of [PyTorch 1.10](https://pytorch.org/docs/stable/index.html) is installed. If you want to use a CUDA-compatible GPU to train graph neural networks, make sure to adjust accordingly.
 
 ## Usage
 
@@ -91,7 +93,7 @@ print(edges[0])
 #   'num_payments': 70}
 ```
 
-### Adapters (NetworkX and torch-geometric)
+### Adapters (NetworkX, torch-geometric, and Spektral)
 
 **NetworkX**
 
@@ -113,9 +115,9 @@ print(bc)
 #  '112NWnxeXBSrFmQgpCDKYvkoGTtTsyD2uy6xDV1yEyT21vQ7C9qD': 0.1256127450980392,
 ```
 
-**torch-geometric**
+**torch-geometric (PyTorch)**
 
-[torch-geometric]() is a popular library for deep learning on geometric datasets. Use the [`convert_nx_to_torch_geometric`] adapter to convert graphs into [`torch_geometric.data.Data`](https://pytorch-geometric.readthedocs.io/en/latest/modules/data.html#torch_geometric.data.Data) objects that can be used to train and evaluate graph neural networks. 
+[torch-geometric](https://pytorch-geometric.readthedocs.io/en/latest/) is a popular library for deep learning on geometric datasets. Use the [`convert_nx_to_torch_geometric`](helium_arango_analysis/adapters.py) adapter to convert graphs into [`torch_geometric.data.Data`](https://pytorch-geometric.readthedocs.io/en/latest/modules/data.html#torch_geometric.data.Data) objects that can be used to train and evaluate graph neural networks. 
 
 ```python
 from helium_arango_analysis.adapters import convert_nx_to_torch_geometric
@@ -131,6 +133,19 @@ print(f'Num nodes: {tg_witness_graph.num_nodes}\n'
 # Num edges: 42
 # Num node features: 2
 # Num edge features: 42
+```
+
+**Spektral (TensorFlow)**
+
+[Spektral](https://graphneural.network/) is TensorFlow's library for graph-based deep learning. To ease the creation of training datasets, we have an adapter in [`helium_arango_analysis.spektral_utils`](helium_arango_analysis/spektral_utils.py) that allows you to create [`spektral.data.graph.Graph`](https://graphneural.network/data/#graph) objects with specified node/edge features and outputs. With the [`spektral.data.dataset.Dataset`] class, you can then load a **lists** of graphs for use in custom models. For example, to create a Spektral Graph that uses hotspot gain & elevation as node features, rssi, snr, and distance_m as edge features, and rewards_5d as output:
+```python
+from helium_arango_analysis.spektral_utils import create_networkx_graph
+
+from helium_arango_analysis.spektral_utils import make_spektral_graph
+tf_witness_graph = make_spektral_graph(nodes, edges,
+                                       node_features=['elevation', 'gain'],
+                                       edge_features=['rssi', 'snr', 'distance_m'],
+                                       output='rewards_5d')
 ```
 
 ### Visualization
